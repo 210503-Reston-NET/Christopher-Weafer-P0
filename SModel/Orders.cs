@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 namespace SModel
 {
     public class Orders
@@ -6,14 +7,17 @@ namespace SModel
         {
 
         }
-        public Orders(Bread name, string detail)
+        public Orders(Bread type, int count)
         {
-            loaf = name;
-            details = detail;
+            Loaf = type;
         }
 
-        public Bread loaf{ get; set; } 
-        public string details{ get; set; }
+        public Bread Loaf{ get; set; } 
+        //public Customer Name{ get; set; }
+
+        //Dictionary stores a bread object as a unique key
+        //Value is the count of that particular loaf.
+        List<Bread> items{ get; set; }
     
     }
 }

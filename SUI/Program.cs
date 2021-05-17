@@ -4,10 +4,9 @@ namespace SUI
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            InterfaceMenu init = new MainMenu();
-            init.Launch();
+            MenuFactory.GetMenu("main").Launch();
         }
     }
 }

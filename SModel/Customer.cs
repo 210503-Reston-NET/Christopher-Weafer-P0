@@ -7,12 +7,25 @@ namespace SModel
         {
 
         }
-        public Customer(string name)
+        public Customer(string firstName, string lastName)
         {
-
+            FirstName = firstName;
+            LastName = lastName;
         }
 
-        public string Name{ get; set; }
+        //public void addOrder(Orders order){
+            //OrderList = new List<Orders>();
+            //OrderList.Add(order);
+        //}
+
+        public string FirstName{ get; set; }
+
+        public string LastName{ get; set; }
         public List<Orders> OrderList { get; set; }
+
+        public override string ToString()
+        {
+            return $"Customer Name: {FirstName}, {LastName}";
+        }
     }
 }

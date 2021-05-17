@@ -2,23 +2,25 @@ using System;
 using System.Collections.Generic;
 namespace SModel
 {
-    public class Location
+    public class Bakery
     {
-        public Location()
+        public Bakery()
         {
 
         }
-        public Location(string name, string city, string state)
+        public Bakery(string name, string city, string state)
         {
-            Bakery = name;
+            BakeryName = name;
             City = city;
             State = state;
 
         }
 
-        public string Bakery{ get; set; }
+        public string BakeryName{ get; set; }
         public string City { get; set; }
         public string State { get; set; }
+
+        public int StoreID { get; set; }
 
         /// <summary>
         /// List that holds the current stock for that particular store
