@@ -5,6 +5,13 @@ namespace SBL
 {
     public interface IOrderBL
     {
+        /// <summary>
+        /// passes data to the database to add an order
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <param name="order"></param>
+        /// <param name="location"></param>
+        /// <returns></returns>
         Orders AddOrder(Customer customer, Orders order, int location);
         List<Orders> GetOrders(Customer customer);
         List<Orders> GetBakeryOrders(int location);

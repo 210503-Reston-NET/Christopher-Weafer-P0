@@ -4,10 +4,25 @@ using SBL;
 using SModel;
 namespace SUI
 {
+    /// <summary>
+    /// Handles Bakery Related functions
+    /// </summary>
     public class LocationMenu : InterfaceMenu
     {
+        /// <summary>
+        /// connection to buildlayer 
+        /// </summary>
         private IOrderBL _orderBL;
 
+        /// <summary>
+        /// Preset password for login verification
+        /// </summary>
+        private string pass = "password";
+        private string secureLogin;
+        /// <summary>
+        /// Handles location relation functions
+        /// </summary>
+        /// <param name="oBL"></param>
         public LocationMenu(IOrderBL oBL)
         {
             _orderBL = oBL;
@@ -36,6 +51,14 @@ namespace SUI
                     break;
                 case "3":
                     location = LocationSelector();
+                    Console.WriteLine("This is a Manager only section, Please Enter the secret password");
+                    secureLogin = Console.ReadLine();
+                    if(secureLogin == pass){}
+                    else{
+                        Console.WriteLine("Stop! you violated the law, pay the court a fine or server your sentence");
+                        break;
+                    }
+                    Console.WriteLine("Welcome Lord Manager!");
                     Console.WriteLine("Please enter the bread you would like to update");
                     breadNum = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("Please enter how many you would like to add");
@@ -132,7 +155,7 @@ namespace SUI
                         Console.WriteLine("invalid input. Please select a valid option");
                         break;
                 }
-            }while(!isValid);
+            }while(isValid == false);
             return selection;
         }
     }

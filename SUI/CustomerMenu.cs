@@ -3,10 +3,16 @@ using SBL;
 using SModel;
 namespace SUI
 {
+    /// <summary>
+    /// Handles 
+    /// </summary>
     public class CustomerMenu : InterfaceMenu
     {
         private ICustomerBL _custBL;
-
+        /// <summary>
+        /// Handles customer related functions
+        /// </summary>
+        /// <param name="cBL"></param>
         public CustomerMenu(ICustomerBL cBL)
         {
             _custBL = cBL;
@@ -39,7 +45,7 @@ namespace SUI
                     Customer custo = SearchCustomer(firstName, lastName);
                     if(custo != null)
                     {
-                        Console.WriteLine("found");
+                        Console.WriteLine("Found!");
                     }
                     else{
                         Console.WriteLine("not found");
@@ -51,7 +57,11 @@ namespace SUI
             }
         }
 
-
+        /// <summary>
+        /// takes the name of a new customer and adds their object to the database
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="last"></param>
         private void AddCustomer(string first, string last){
             Customer cust = new Customer(first, last);
             Customer doesExist = SearchCustomer(first, last);
@@ -62,10 +72,15 @@ namespace SUI
             {
                 Customer newBoi = _custBL.AddCustomer(cust);
                 Console.WriteLine(newBoi.ToString());
-                Console.WriteLine("Customer added(not really)");
+                Console.WriteLine("Customer added!");
             }
         }
-
+        /// <summary>
+        /// takes the name of the customer and returns a created customer if one exists in the DB.
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="last"></param>
+        /// <returns></returns>
         private Customer SearchCustomer(string first, string last)
         {
             try

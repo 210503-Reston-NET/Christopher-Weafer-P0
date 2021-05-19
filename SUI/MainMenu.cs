@@ -14,14 +14,16 @@ namespace SUI
             {
                 string selection;
 
-                Console.WriteLine("Welcome to the Bread Store: Where people go to buy the bread");
+                Console.WriteLine("Welcome to the Pheonix Bakery Coalition");
                 Console.WriteLine("Please enter a correspoonding number to select an option");
                 Console.WriteLine("[1]: Place an Order");
                 Console.WriteLine("[2]: Customer Add/Search");
                 Console.WriteLine("[3]: Location Search");
-                Console.WriteLine("[4]: Manager Portal");
+                Console.WriteLine("[4]: Quit");
+
 
                 selection = Console.ReadLine();
+
 
                 switch(selection)
                 {
@@ -37,8 +39,15 @@ namespace SUI
                         menuPortal = MenuFactory.GetMenu("location");
                         menuPortal.Launch();
                         break;
+                    case "4":
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Please Select a Valid Option");
+                        exit = false;
+                        break;
                 }
-            }while(!exit);
+            }while(exit == false);
         }
     }
 }

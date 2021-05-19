@@ -57,7 +57,6 @@ namespace SDL
             int tempID = t.OrderNumber;
             Console.WriteLine(tempID);
 
-           
             _OBContext.BreadBatches.Add(
                 new Entity.BreadBatch
                 {
@@ -69,7 +68,11 @@ namespace SDL
             _OBContext.SaveChanges();
             return order;
         }
-
+        /// <summary>
+        /// Returns a list of all odders contained within a customer object
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         public List<Model.Orders> GetOrders(Model.Customer customer)
         {
             return _OBContext.Orders.Where(
@@ -87,7 +90,11 @@ namespace SDL
                 ).ToList();
 
         }
-
+        /// <summary>
+        /// Returns a list of orders that correspond with the given location
+        /// </summary>
+        /// <param name="locationID"></param>
+        /// <returns></returns>
         public List<Model.Orders> GetBakeryOrders(int locationID){
             return _OBContext.Orders.Where(
                 order => order.BakeryId == locationID
@@ -98,7 +105,8 @@ namespace SDL
                         BreadCount = Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.OrderNumber).BreadQuantity),
                         Loaf = new Model.Bread(Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.OrderNumber).ProductId)),
                         //Loaf = GetBreadName(Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.OrderNumber).ProductId)),
-                        bakery = new Model.Bakery(Convert.ToInt32(order.BakeryId), _OBContext.Bakeries.FirstOrDefault(bake => bake.BakeId == order.BakeryId).BakeryName)
+                        bakery = new Model.Bakery(Convert.ToInt32(order.BakeryId), _OBContext.Bakeries.FirstOrDefault(bake => bake.BakeId == order.BakeryId).BakeryName),
+                        OrderTotal = Convert.ToDouble(order.OrderTotal)
                     }
                 ).ToList();
 

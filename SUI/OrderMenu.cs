@@ -129,6 +129,10 @@ namespace SUI
             
             
         }
+        /// <summary>
+        /// gets a lost of orders and write them to console
+        /// </summary>
+        /// <param name="customer"></param>
         private void ViewOrders(Customer customer)
         {
             List<Orders> orderResult = _OrderBL.GetOrders(customer);
@@ -136,9 +140,11 @@ namespace SUI
             {
                 Console.WriteLine(o.ToString());
             }
-
         }
-
+        /// <summary>
+        /// Reusable code allowing user to select which store they would like to buy from
+        /// </summary>
+        /// <returns></returns>
         private int LocationSelector()
         {
             string num;
@@ -155,7 +161,6 @@ namespace SUI
             Console.WriteLine("[8]: Matzo & More");
             Console.WriteLine("[9]: Bens Bakery");
             num = Console.ReadLine();
-            
             do{
                 switch(num)
                 {
