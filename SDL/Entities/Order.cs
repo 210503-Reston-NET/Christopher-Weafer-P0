@@ -9,13 +9,16 @@ namespace SDL.Entities
     {
         public Order()
         {
-            Breads = new HashSet<Bread>();
+            BreadBatches = new HashSet<BreadBatch>();
         }
 
         public int OrderNumber { get; set; }
+        public double? OrderTotal { get; set; }
         public int? CustomerId { get; set; }
+        public int? BakeryId { get; set; }
 
+        public virtual Bakery Bakery { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual ICollection<Bread> Breads { get; set; }
+        public virtual ICollection<BreadBatch> BreadBatches { get; set; }
     }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 namespace SModel
 {
@@ -13,11 +15,17 @@ namespace SModel
             LastName = lastName;
         }
 
+         public Customer(int id, string firstName, string lastName) : this(firstName, lastName)
+        {
+            this.Id = id;
+        }
+
         //public void addOrder(Orders order){
             //OrderList = new List<Orders>();
             //OrderList.Add(order);
         //}
 
+         public int Id { get; set; }
         public string FirstName{ get; set; }
 
         public string LastName{ get; set; }

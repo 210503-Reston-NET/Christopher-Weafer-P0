@@ -8,6 +8,12 @@ namespace SModel
         {
 
         }
+        public Bakery(int ID, string name)
+        {
+            BakeryName = name;
+            StoreID = ID;
+
+        }
         public Bakery(string name, string city, string state)
         {
             BakeryName = name;

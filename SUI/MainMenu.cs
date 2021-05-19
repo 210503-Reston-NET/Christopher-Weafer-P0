@@ -34,7 +34,8 @@ namespace SUI
                         menuPortal.Launch();
                         break;  
                     case "3":
-                        Console.WriteLine("To Be Implemented");
+                        menuPortal = MenuFactory.GetMenu("location");
+                        menuPortal.Launch();
                         break;
                 }
             }while(!exit);

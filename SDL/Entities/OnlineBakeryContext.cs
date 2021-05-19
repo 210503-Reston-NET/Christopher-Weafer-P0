@@ -17,11 +17,12 @@ namespace SDL.Entities
         {
         }
 
-        public virtual DbSet<Associate> Associates { get; set; }
+        public virtual DbSet<Bakery> Bakeries { get; set; }
+        public virtual DbSet<BakeryInventory> BakeryInventories { get; set; }
         public virtual DbSet<Bread> Breads { get; set; }
+        public virtual DbSet<BreadBatch> BreadBatches { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Trainer> Trainers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,39 +37,83 @@ namespace SDL.Entities
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<Associate>(entity =>
+            modelBuilder.Entity<Bakery>(entity =>
             {
-                entity.ToTable("associates");
+                entity.HasKey(e => e.BakeId)
+                    .HasName("PK__Bakery__876B1A9E00D6968F");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.ToTable("Bakery");
 
-                entity.Property(e => e.AssociateLocale)
-                    .IsRequired()
-                    .HasMaxLength(2)
-                    .IsUnicode(false)
-                    .HasColumnName("associateLocale");
+                entity.Property(e => e.BakeId).HasColumnName("bakeID");
 
-                entity.Property(e => e.AssociateName)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("associateName");
+                entity.Property(e => e.BakeryName)
+                    .HasMaxLength(50)
+                    .HasColumnName("bakeryName");
 
-                entity.Property(e => e.RevaPoints).HasColumnName("revaPoints");
+                entity.Property(e => e.City)
+                    .HasMaxLength(50)
+                    .HasColumnName("city");
+
+                entity.Property(e => e.State)
+                    .HasMaxLength(50)
+                    .HasColumnName("state");
+            });
+
+            modelBuilder.Entity<BakeryInventory>(entity =>
+            {
+                entity.ToTable("BakeryInventory");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+                entity.Property(e => e.StoreId).HasColumnName("StoreID");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.BakeryInventories)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK__BakeryInv__Produ__3C34F16F");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.BakeryInventories)
+                    .HasForeignKey(d => d.StoreId)
+                    .HasConstraintName("FK__BakeryInv__Store__3D2915A8");
             });
 
             modelBuilder.Entity<Bread>(entity =>
             {
-                entity.HasKey(e => e.BreadType)
-                    .HasName("PK__Breads__2F5D7CA464EADD3A");
+                entity.HasKey(e => e.BreadCode)
+                    .HasName("PK__Bread__AA2EF96091C50D0F");
+
+                entity.ToTable("Bread");
 
                 entity.Property(e => e.BreadType).HasMaxLength(50);
 
                 entity.Property(e => e.Price).HasColumnName("price");
+            });
 
-                entity.HasOne(d => d.BreadCollectionNavigation)
-                    .WithMany(p => p.Breads)
-                    .HasForeignKey(d => d.BreadCollection)
-                    .HasConstraintName("FK__Breads__BreadCol__02FC7413");
+            modelBuilder.Entity<BreadBatch>(entity =>
+            {
+                entity.HasKey(e => e.BatchId)
+                    .HasName("PK__BreadBat__5D55CE386EA0249E");
+
+                entity.ToTable("BreadBatch");
+
+                entity.Property(e => e.BatchId).HasColumnName("BatchID");
+
+                entity.Property(e => e.OrderId).HasColumnName("OrderID");
+
+                entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.BreadBatches)
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("FK__BreadBatc__Order__2FCF1A8A");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.BreadBatches)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK__BreadBatc__Produ__30C33EC3");
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -89,35 +134,21 @@ namespace SDL.Entities
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.HasKey(e => e.OrderNumber)
-                    .HasName("PK__Orders__CAC5E7425E89C22C");
+                    .HasName("PK__Orders__CAC5E742534BA487");
+
+                entity.Property(e => e.BakeryId).HasColumnName("bakeryID");
 
                 entity.Property(e => e.CustomerId).HasColumnName("customerID");
+
+                entity.HasOne(d => d.Bakery)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.BakeryId)
+                    .HasConstraintName("FK__Orders__bakeryID__2CF2ADDF");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Orders__customer__00200768");
-            });
-
-            modelBuilder.Entity<Trainer>(entity =>
-            {
-                entity.ToTable("trainers");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.CaffeineLevel).HasColumnName("caffeineLevel");
-
-                entity.Property(e => e.Campus)
-                    .IsRequired()
-                    .HasMaxLength(3)
-                    .IsUnicode(false)
-                    .HasColumnName("campus");
-
-                entity.Property(e => e.TrainerName)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("trainerName");
+                    .HasConstraintName("FK__Orders__customer__2BFE89A6");
             });
 
             OnModelCreatingPartial(modelBuilder);

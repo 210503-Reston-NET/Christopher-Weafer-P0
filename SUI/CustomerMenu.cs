@@ -30,7 +30,6 @@ namespace SUI
                     Console.WriteLine("Please Enter your Last Name");
                     lastName = Console.ReadLine();
                     AddCustomer(firstName, lastName);
-                    Console.WriteLine("Customer added(not really)");
                     break;
                 case "2":
                     Console.WriteLine("Please Enter their First Name");
@@ -55,8 +54,16 @@ namespace SUI
 
         private void AddCustomer(string first, string last){
             Customer cust = new Customer(first, last);
-            Customer newBoi = _custBL.AddCustomer(cust);
-            Console.WriteLine(newBoi.ToString());
+            Customer doesExist = SearchCustomer(first, last);
+            
+            if(doesExist != null)
+            {}
+            else
+            {
+                Customer newBoi = _custBL.AddCustomer(cust);
+                Console.WriteLine(newBoi.ToString());
+                Console.WriteLine("Customer added(not really)");
+            }
         }
 
         private Customer SearchCustomer(string first, string last)
