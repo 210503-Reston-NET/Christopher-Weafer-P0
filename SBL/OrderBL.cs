@@ -11,12 +11,24 @@ namespace SBL
         {
             _storage = storage;
         }
+        /// <summary>
+        /// passes data to the database to add an order
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <param name="order"></param>
+        /// <param name="location"></param>
+        /// <returns></returns>
         public Orders AddOrder(Customer customer, Orders orders, int location)
         {
             _storage.AddOrder(customer, orders, location);
             return orders;
         }
 
+        /// <summary>
+        /// returns a bread object from database based on given input
+        /// </summary>
+        /// <param name="breadType"></param>
+        /// <returns></returns>
         public Bread GetBread(string breadType)
         {
             return _storage.GetBread(breadType);
