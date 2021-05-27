@@ -7,7 +7,7 @@ namespace SModel
         }
         public Bread(int id)
         {
-            BreadID = id;
+            BreadId = id;
         }
         
         public Bread(string type, float price){
@@ -17,23 +17,24 @@ namespace SModel
 
         public Bread(int id, string type, double price)
         {
-            this.BreadID = id;
+            this.BreadId = id;
             this.Breadtype = type;
             this.Price = price;
         }
         public Bread(int id, string type, double price, int stock)
         {
-            this.BreadID = id;
+            this.BreadId = id;
             this.Breadtype = type;
             this.Price = price;
             this.Stock = stock;
         }
 
         /// <summary>
+        /// Primary Key
         /// Contains the ID key for Bread types in the database
         /// </summary>
         /// <value></value>
-        public int BreadID{ get; set; }
+        public int BreadId{ get; set; }
 
         /// <summary>
         /// Contains a string containing the type of bread i.e Wheat
@@ -56,7 +57,7 @@ namespace SModel
 
         public override string ToString()
         {
-            return $"Bread ID: {BreadID}, Type: {Breadtype}, Price: {Price}, In Stock:{Stock}";
+            return $"Bread ID: {BreadId}, Type: {Breadtype}, Price: {Price}, In Stock:{Stock}";
         }
     }
 }

@@ -1,5 +1,4 @@
-using Model = SModel;
-using Entity = SDL.Entities;
+using SModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +6,18 @@ namespace SDL
 {   
     public class CustomerDB : ICustStorage{
         //used to reference 
-        private Entity.OnlineBakeryContext _OBContext;
+        private BakeryDBContext _OBContext;
 
-        public CustomerDB(Entities.OnlineBakeryContext context)
+        public CustomerDB(BakeryDBContext context)
         {
             _OBContext = context;
         }
         
         //Customer Logic
-        public Model.Customer AddCustomer(Model.Customer customer)
+        public Customer AddCustomer(Customer customer)
         {
             // This creates something to sent to DB
-            _OBContext.Customers.Add(new Entity.Customer{
+            _OBContext.Customers.Add(new Customer{
                 FirstName = customer.FirstName,
                 LastName = customer.LastName
             });
@@ -26,27 +25,27 @@ namespace SDL
             _OBContext.SaveChanges();
             return customer;
         }
-        public Model.Customer GetCustomer(Model.Customer customer)
+        public Customer GetCustomer(Customer customer)
         {
-            Entity.Customer get = _OBContext.Customers.FirstOrDefault(cust=> cust.FirstName == customer.FirstName && cust.LastName == customer.LastName);
+            Customer get = _OBContext.Customers.FirstOrDefault(cust=> cust.FirstName == customer.FirstName && cust.LastName == customer.LastName);
             if(get == null) return null;
-            else return new Model.Customer(get.Id, get.FirstName, get.LastName);
+            else return new Customer(get.Id, get.FirstName, get.LastName);
         }
         
         
-        public List<Model.Customer> GetAllCustomers()
+        public List<Customer> GetAllCustomers()
         {
             return _OBContext.Customers
             .Select(
-                customer => new Model.Customer(customer.FirstName, customer.LastName)
+                customer => new Customer(customer.FirstName, customer.LastName)
             ).ToList();
         }
 
         //Order Logic
-        public Model.Orders AddOrder(Model.Customer customer, Model.Orders order, int location)
+        public Orders AddOrder(Customer customer, Orders order, int location)
         {
-            Entity.OnlineBakeryContext _OBContext1 = new Entity.OnlineBakeryContext();
-            Entity.Order t =  new Entity.Order
+            BakeryDBContext _OBContext1 = new BakeryDBContext();
+            Orders t =  new Orders
                 {
                     CustomerId = GetCustomer(customer).Id,
                     OrderTotal = order.Loaf.Price*order.BreadCount,
@@ -54,14 +53,14 @@ namespace SDL
                 };
             _OBContext1.Orders.Add(t);
             _OBContext1.SaveChanges();
-            int tempID = t.OrderNumber;
+            int tempID = t.Id;
             Console.WriteLine(tempID);
 
             _OBContext.BreadBatches.Add(
-                new Entity.BreadBatch
+                new BreadBatch
                 {
                     OrderId = tempID,
-                    ProductId = order.Loaf.BreadID,
+                    ProductId = order.Loaf.BreadId,
                     BreadQuantity = order.BreadCount
                 }
             );
@@ -73,18 +72,18 @@ namespace SDL
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
-        public List<Model.Orders> GetOrders(Model.Customer customer)
+        public List<Orders> GetOrders(Customer customer)
         {
             return _OBContext.Orders.Where(
                 order => order.CustomerId == GetCustomer(customer).Id
                 ).Select(
-                    order => new Model.Orders
+                    order => new Orders
                     {
-                        OrderNumber = order.OrderNumber,
-                        BreadCount = Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.OrderNumber).BreadQuantity),
-                        Loaf = new Model.Bread(Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.OrderNumber).ProductId)),
+                        Id = order.Id,
+                        BreadCount = Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.Id).BreadQuantity),
+                        Loaf = new Bread(Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.Id).ProductId)),
                         //Loaf = GetBreadName(Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.OrderNumber).ProductId)),
-                        bakery = new Model.Bakery(Convert.ToInt32(order.BakeryId), _OBContext.Bakeries.FirstOrDefault(bake => bake.BakeId == order.BakeryId).BakeryName),
+                        bakery = new Bakery(Convert.ToInt32(order.BakeryId), _OBContext.Bakeries.FirstOrDefault(bake => bake.BakeryId == order.BakeryId).BakeryName),
                         OrderTotal = Convert.ToDouble(order.OrderTotal)
                     }
                 ).ToList();
@@ -95,33 +94,33 @@ namespace SDL
         /// </summary>
         /// <param name="locationID"></param>
         /// <returns></returns>
-        public List<Model.Orders> GetBakeryOrders(int locationID){
+        public List<Orders> GetBakeryOrders(int locationID){
             return _OBContext.Orders.Where(
-                order => order.BakeryId == locationID
+                order => order.bakery.BakeryId == locationID
                 ).Select(
-                    order => new Model.Orders
+                    order => new Orders
                     {
-                        OrderNumber = order.OrderNumber,
-                        BreadCount = Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.OrderNumber).BreadQuantity),
-                        Loaf = new Model.Bread(Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.OrderNumber).ProductId)),
+                        Id = order.Id,
+                        BreadCount = Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.Id).BreadQuantity),
+                        Loaf = new Bread(Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.Id).ProductId)),
                         //Loaf = GetBreadName(Convert.ToInt32(_OBContext.BreadBatches.FirstOrDefault(ord => ord.OrderId == order.OrderNumber).ProductId)),
-                        bakery = new Model.Bakery(Convert.ToInt32(order.BakeryId), _OBContext.Bakeries.FirstOrDefault(bake => bake.BakeId == order.BakeryId).BakeryName),
+                        bakery = new Bakery(Convert.ToInt32(order.bakery.BakeryId), _OBContext.Bakeries.FirstOrDefault(bake => bake.BakeryId == order.bakery.BakeryId).BakeryName),
                         OrderTotal = Convert.ToDouble(order.OrderTotal)
                     }
                 ).ToList();
 
         }
 
-        public List<Model.Bread> GetBakeryInventory(int locationID)
+        public List<Bread> GetBakeryInventory(int locationID)
         {
             return _OBContext.BakeryInventories.Where(
                 BInv => BInv.StoreId == locationID
                 ).Select(
-                    BInv => new Model.Bread
+                    BInv => new Bread
                     {
-                        BreadID = Convert.ToInt32(BInv.ProductId),
-                        Breadtype = _OBContext.Breads.FirstOrDefault(bread => bread.BreadCode == BInv.ProductId).BreadType,
-                        Price = Convert.ToDouble(_OBContext.Breads.FirstOrDefault(bread => bread.BreadCode == BInv.ProductId).Price),
+                        BreadId = Convert.ToInt32(BInv.ProductId),
+                        Breadtype = _OBContext.Breads.FirstOrDefault(bread => bread.BreadId == BInv.ProductId).Breadtype,
+                        Price = Convert.ToDouble(_OBContext.Breads.FirstOrDefault(bread => bread.BreadId== BInv.ProductId).Price),
                         Stock = Convert.ToInt32(BInv.Stock)
                     }
                 ).ToList();
@@ -137,17 +136,17 @@ namespace SDL
 
         //Bread Logic
 
-        public Model.Bread GetBreadName(int itemID)
+        public Bread GetBreadName(int itemID)
         {
-            Entity.Bread get = _OBContext.Breads.FirstOrDefault(bread => bread.BreadCode == itemID);
+            Bread get = _OBContext.Breads.FirstOrDefault(bread => bread.BreadId == itemID);
             if(get == null) return null;
-            else return new Model.Bread(get.BreadCode, get.BreadType, get.Price.Value);
+            else return new Bread(get.BreadId, get.Breadtype, get.Price);
         }
-        public Model.Bread GetBread(string breadBrand)
+        public Bread GetBread(string breadBrand)
         {
-            Entity.Bread get = _OBContext.Breads.FirstOrDefault(bread => bread.BreadType == breadBrand);
+            Bread get = _OBContext.Breads.FirstOrDefault(bread => bread.Breadtype == breadBrand);
             if(get == null) return null;
-            else return new Model.Bread(get.BreadCode, get.BreadType, get.Price.Value);
+            else return new Bread(get.BreadId, get.Breadtype, get.Price);
         }
     }
 }

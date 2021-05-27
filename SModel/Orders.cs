@@ -20,7 +20,7 @@ namespace SModel
         /// <param name="count"></param>
         public Orders(int id, Bread type, int count)
         {
-            OrderNumber = id;
+            Id = id;
             Loaf = type;
             BreadCount = count;
         }
@@ -35,26 +35,30 @@ namespace SModel
         /// <param name="orderTot"></param>
         public Orders(int id, Bread type, int count, Bakery location, double orderTot)
         {
-            OrderNumber = id;
+            Id = id;
             Loaf = type;
             BreadCount = count;
             bakery = location;
             OrderTotal = orderTot;
         }
 
-        public int OrderNumber;
+        public int Id;
         public int BreadCount{ get; set; }
         
         public double OrderTotal{ get; set;}
         public Bread Loaf{ get; set; } 
         public Bakery bakery{ get; set; } 
 
+        //foreign Keys
+        public int CustomerId{ get; set; }
+        public int BakeryId{ get; set; }
+
 
 
         public override string ToString()
         {
             string orderDisplay;
-            orderDisplay = $"\tOrder Number: {OrderNumber} \n\tBread ID:{Loaf.BreadID} \n\tQuantity {BreadCount} \n\tOrder Cost: {OrderTotal}";
+            orderDisplay = $"\tOrder Number: {Id} \n\tBread ID:{Loaf.BreadId} \n\tQuantity {BreadCount} \n\tOrder Cost: {OrderTotal}";
             if(bakery != null)
             {
                 orderDisplay += $"\n\tBakery: {bakery.BakeryName}\n";

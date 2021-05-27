@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using SBL;
 using SDL;
-using SDL.Entities;
 namespace SUI
 {
     public class MenuFactory
@@ -22,11 +21,11 @@ namespace SUI
             .Build();
             
             string connector = configuration.GetConnectionString("BakeryDB");
-            DbContextOptions<OnlineBakeryContext> options = new DbContextOptionsBuilder<OnlineBakeryContext>()
+            DbContextOptions<BakeryDBContext> options = new DbContextOptionsBuilder<BakeryDBContext>()
             .UseSqlServer(connector)
             .Options;
 
-            var context = new OnlineBakeryContext(options);
+            var context = new BakeryDBContext(options);
             switch(menuSelect.ToLower())
             {
                 case "main":

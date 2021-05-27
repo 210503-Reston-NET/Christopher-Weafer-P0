@@ -15,7 +15,7 @@ namespace SModel
             LastName = lastName;
         }
 
-         public Customer(int id, string firstName, string lastName) : this(firstName, lastName)
+        public Customer(int id, string firstName, string lastName) : this(firstName, lastName)
         {
             this.Id = id;
         }
@@ -25,7 +25,11 @@ namespace SModel
             //OrderList.Add(order);
         //}
 
-         public int Id { get; set; }
+        /// <summary>
+        /// Primary Key
+        /// </summary>
+        /// <value></value>
+        public int Id { get; set; }
         public string FirstName{ get; set; }
 
         public string LastName{ get; set; }

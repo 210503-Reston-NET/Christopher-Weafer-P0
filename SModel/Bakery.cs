@@ -11,7 +11,7 @@ namespace SModel
         public Bakery(int ID, string name)
         {
             BakeryName = name;
-            StoreID = ID;
+            BakeryId = ID;
 
         }
         public Bakery(string name, string city, string state)
@@ -26,7 +26,12 @@ namespace SModel
         public string City { get; set; }
         public string State { get; set; }
 
-        public int StoreID { get; set; }
+        /// <summary>
+        /// Primary Key
+        /// Holds an integer value denoting the stores ID number
+        /// </summary>
+        /// <value></value>
+        public int BakeryId { get; set; }
 
         /// <summary>
         /// List that holds the current stock for that particular store
