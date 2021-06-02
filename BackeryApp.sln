@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SModel", "SModel\SModel.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BakeryWebUI", "BakeryWebUI\BakeryWebUI.csproj", "{E2CFBF79-9A83-4074-8234-15628164E68C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeryTest", "BakeryTest\BakeryTest.csproj", "{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{E2CFBF79-9A83-4074-8234-15628164E68C}.Release|x64.Build.0 = Release|Any CPU
 		{E2CFBF79-9A83-4074-8234-15628164E68C}.Release|x86.ActiveCfg = Release|Any CPU
 		{E2CFBF79-9A83-4074-8234-15628164E68C}.Release|x86.Build.0 = Release|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Debug|x64.Build.0 = Debug|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Debug|x86.Build.0 = Debug|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Release|x64.ActiveCfg = Release|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Release|x64.Build.0 = Release|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Release|x86.ActiveCfg = Release|Any CPU
+		{36E29E2D-4BB1-4585-8E74-FF4C25C6932F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
